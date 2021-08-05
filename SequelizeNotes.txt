@@ -1,0 +1,11 @@
+validators: contains {args, msg}
+
+
+different hooks: 
+
+beforeValidate:
+afterValidate: 
+etc etc.
+
+put this under the define. 
+why use this? example: hashing a users password before it gets stored.
