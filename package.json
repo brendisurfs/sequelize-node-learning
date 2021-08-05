@@ -16,6 +16,6 @@
     "@types/express": "^4.17.13"
   },
   "scripts": {
-    "start": "yarn ./server.ts"
+    "start": "node ./server.ts"
   }
 }

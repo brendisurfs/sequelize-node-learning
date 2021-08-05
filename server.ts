@@ -1,6 +1,5 @@
 import express from "express";
 import Sequelize from "sequelize";
-import { ConnectionError } from "sequelize";
 
 const PORT = 8001;
 const app = express();
@@ -20,9 +19,19 @@ const User = conn.define("User", {
   bio: Sequelize.STRING,
 });
 
-conn.sync({
-  logging: console.log,
-});
+conn
+  .sync({
+    logging: console.log,
+  })
+  .then(() => {
+    console.log("connection with sync successful.");
+  })
+  .then(() => {
+    User.create({
+      name: "brendi",
+      bio: "sick surf guy man",
+    });
+  });
 
 // THIRD: authenticate the connection
 conn.authenticate().then(() => {
