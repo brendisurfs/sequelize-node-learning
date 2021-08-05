@@ -8,7 +8,7 @@ import User from "./models/user";
 
 // sync will create through our models.
 connection
-  .sync()
+  .sync({ force: true })
   .then((res) => {
     console.log("connected to the data!");
   })
