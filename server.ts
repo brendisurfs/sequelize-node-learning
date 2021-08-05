@@ -1,42 +1,23 @@
-import express from "express";
-import Sequelize from "sequelize";
+import { Sequelize } from "sequelize";
 
-const PORT = 8001;
-const app = express();
+// utils
+import connection from "./util/database";
 
-// connection with sequelize
-// FIRST: initialize a new sequelize object.
-// SECOND: pass in the db options. FOurth param is a slot to put optional values.
-//
-const conn = new Sequelize.Sequelize("db", "user", "pass", {
-  host: "localhost",
-  dialect: "sqlite",
-  storage: "db.sqlite",
-});
+// models
+import User from "./models/user";
 
-const User = conn.define("User", {
-  user: Sequelize.STRING,
-  bio: Sequelize.STRING,
-});
-
-conn
-  .sync({
-    logging: console.log,
-  })
-  .then(() => {
-    console.log("connection with sync successful.");
+// sync will create through our models.
+connection
+  .sync()
+  .then((res) => {
+    console.log("connected to the data!");
   })
   .then(() => {
     User.create({
-      name: "brendi",
-      bio: "sick surf guy man",
+      name: "Brendan",
+      bio: "man I wish this worked",
     });
+  })
+  .catch((err) => {
+    console.log(err);
   });
-
-// THIRD: authenticate the connection
-conn.authenticate().then(() => {
-  console.log(`connection to the db was successful.`);
-});
-app.listen(PORT, () => {
-  console.log(`port:${PORT} is away.`);
-});
