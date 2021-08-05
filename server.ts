@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 import express from "express";
-
+import _USERS from "./Users.json";
 // utils
 import connection from "./util/database";
 
@@ -27,17 +27,15 @@ const app = express();
 //
 // sync will create through our models.
 connection
-  .sync({ force: true })
+  .sync({ force: false })
   .then((res) => {
     console.log("connected to the data!");
   })
   .then(() => {
-    User.create({
-      first: "brendi",
-      last: "prendo",
-      full_name: "brendo prendo",
-      bio: "new bio here",
-    });
+    User.bulkCreate(_USERS);
+  })
+  .then((users) => {
+    console.log("success adding users");
   })
   .catch((err) => {
     console.log(err);

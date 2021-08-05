@@ -1,28 +1,29 @@
 import { DataTypes, ModelCtor } from "sequelize";
 import connection from "../util/database";
-
+import _USERS from "../Users.json";
 type UType = {
   name: string;
   bio: string;
 };
 
 // create our User table
+// match up the data with our _USERS json file.
 const User = connection.define(
   "User",
   {
-    uuid: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-    },
-    first: {
+    name: DataTypes.STRING,
+    email: {
       type: DataTypes.STRING,
+      validate: {
+        isEmail: true,
+      },
     },
-    last: {
+    password: {
       type: DataTypes.STRING,
+      validate: {
+        isAlphanumeric: true,
+      },
     },
-    full_name: DataTypes.STRING,
-    bio: DataTypes.TEXT,
   },
   {
     hooks: {
