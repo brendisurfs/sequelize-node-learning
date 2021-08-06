@@ -6,24 +6,46 @@ import connection from "./util/database";
 
 // models
 import User from "./models/user";
+import { Op } from "sequelize";
+import { idText } from "typescript";
 
 const PORT = 8000;
 const app = express();
 
 // routes
+app.get("/findall", (req, res) => {
+  User.findAll({
+    where: {
+      name: {
+        [Op.like]: "Da%",
+      },
+    },
+  })
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => {
+      res.status(404).send(err);
+      console.log(err);
+    });
+});
 
-// app.get("/", (_, res) => {
-//   User.create({
-//     name: "brendi",
-//     bio: "nice",
-//   })
-//     .then((user) => {
-//       res.json(user);
-//     })
-//     .catch((err) => {
-//       res.status(404).send(err);
-//     });
-// });
+// takes the params,
+app.get("/:id", (req, res) => {
+  User.findByPk(req.params.id)
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.post("/post", (req, res) => {
+  let newUser = req.body.user;
+  User.create(newUser);
+});
+
 //
 // sync will create through our models.
 connection

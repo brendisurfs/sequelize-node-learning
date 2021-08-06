@@ -23,6 +23,6 @@
     "sequelize-cli": "^6.2.0"
   },
   "scripts": {
-    "start": "node sequelize.js"
+    "start": "nodemon server.ts"
   }
 }
